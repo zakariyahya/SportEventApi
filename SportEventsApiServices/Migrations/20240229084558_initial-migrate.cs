@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace SportEventsApiServices.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigrate : Migration
+    public partial class initialmigrate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -21,9 +21,10 @@ namespace SportEventsApiServices.Migrations
                     OrganizerName = table.Column<string>(type: "text", nullable: false),
                     ImageLocation = table.Column<string>(type: "text", nullable: false),
                     CreatedBy = table.Column<string>(type: "text", nullable: false),
-                    CreatedTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    CreatedTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
                     LastModifiedBy = table.Column<string>(type: "text", nullable: false),
-                    LastModifiedTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                    LastModifiedTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
+                    ActiveFlag = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -42,9 +43,10 @@ namespace SportEventsApiServices.Migrations
                     PasswordHash = table.Column<byte[]>(type: "bytea", nullable: true),
                     PasswordSalt = table.Column<byte[]>(type: "bytea", nullable: true),
                     CreatedBy = table.Column<string>(type: "text", nullable: false),
-                    CreatedTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    CreatedTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
                     LastModifiedBy = table.Column<string>(type: "text", nullable: false),
-                    LastModifiedTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                    LastModifiedTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
+                    ActiveFlag = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -57,14 +59,15 @@ namespace SportEventsApiServices.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    EventDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    EventDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     EventType = table.Column<string>(type: "text", nullable: false),
-                    EventName = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    EventName = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     OrganizerId = table.Column<int>(type: "integer", nullable: false),
                     CreatedBy = table.Column<string>(type: "text", nullable: false),
-                    CreatedTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    CreatedTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
                     LastModifiedBy = table.Column<string>(type: "text", nullable: false),
-                    LastModifiedTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                    LastModifiedTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
+                    ActiveFlag = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {

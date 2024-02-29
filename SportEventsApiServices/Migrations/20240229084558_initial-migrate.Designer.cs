@@ -12,8 +12,8 @@ using SportEventsApiServices.Services;
 namespace SportEventsApiServices.Migrations
 {
     [DbContext(typeof(SportEventContextClass))]
-    [Migration("20240228082117_InitialMigrate")]
-    partial class InitialMigrate
+    [Migration("20240229084558_initial-migrate")]
+    partial class initialmigrate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,12 +33,16 @@ namespace SportEventsApiServices.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("ActiveFlag")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("CreatedBy")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime?>("CreatedTime")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("ImageLocation")
                         .IsRequired()
@@ -49,7 +53,7 @@ namespace SportEventsApiServices.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime?>("LastModifiedTime")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("OrganizerName")
                         .IsRequired()
@@ -68,18 +72,22 @@ namespace SportEventsApiServices.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("ActiveFlag")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("CreatedBy")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime?>("CreatedTime")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<DateTime>("EventDate")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<DateTime>("EventName")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("EventType")
                         .IsRequired()
@@ -90,7 +98,7 @@ namespace SportEventsApiServices.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime?>("LastModifiedTime")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<int>("OrganizerId")
                         .HasColumnType("integer");
@@ -110,12 +118,16 @@ namespace SportEventsApiServices.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("ActiveFlag")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("CreatedBy")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime?>("CreatedTime")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -130,7 +142,7 @@ namespace SportEventsApiServices.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime?>("LastModifiedTime")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("LastName")
                         .IsRequired()

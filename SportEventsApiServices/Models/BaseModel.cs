@@ -25,5 +25,7 @@ namespace SportEventsApiServices.Models
         public string LastModifiedBy { get; set; } = string.Empty;
         [JsonProperty("lastModifiedTime")]
         public DateTime? LastModifiedTime { get; set; }
+        [JsonProperty("activeFlag")]
+        public string ActiveFlag { get; set; } = "Y";
     }
 }
