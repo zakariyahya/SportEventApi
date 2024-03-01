@@ -1,4 +1,4 @@
-﻿namespace SportEventsApiServices.Models.Request
+﻿namespace SportEventsApiServices.Models.User.Request
 {
     public class LoginModel
     {

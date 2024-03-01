@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using SportEventsApiServices.Services;
@@ -19,33 +20,74 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddDbContext<SportEventContextClass>(opt => opt.UseNpgsql(configuration["ConnectionStrings:PostgreSQLConnectionString"]));
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-// In ConfigureServices method
-builder.Services.AddSwaggerGen(c =>
-{
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Your API", Version = "v1" });
-    // Include XML comments for Swagger documentation
-/*    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-    c.IncludeXmlComments(xmlPath);*/
-});
 
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
+builder.Services.AddAuthentication(x =>
     {
-        options.TokenValidationParameters = new TokenValidationParameters
+        x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    })
+    .AddJwtBearer(x =>
+    {
+        x.Events = new JwtBearerEvents
+        {
+            OnTokenValidated = context =>
+            {
+                var userService = context.HttpContext.RequestServices.GetRequiredService<IUserService>();
+                var userId = int.Parse(context.Principal.Identity.Name);
+                var user = userService.GetByIdAsync(userId);
+                if (user == null)
+                {
+                    // return unauthorized if user no longer exists
+                    context.Fail("Unauthorized");
+                }
+                return Task.CompletedTask;
+            }
+        };
+        x.RequireHttpsMetadata = false;
+        x.SaveToken = true;
+        x.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuerSigningKey = true,
             IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(builder.Configuration.GetSection("AppSettings:Token").Value)),
             ValidateIssuer = false,
-            ValidateAudience = false,
+            ValidateAudience = false
         };
     });
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+    {
+        Title = "Sport Event API .NET 8",
+        Description = "Sport Event API with .NET",
+        Version = "v1"
+    });
+    var securityScheme = new OpenApiSecurityScheme
+    {
+        Name = "JWT Authentication",
+        Description = "Enter JWT Bearer token **_only_**",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.Http,
+        Scheme = "bearer", // must be lower case
+        BearerFormat = "JWT",
+        Reference = new OpenApiReference
+        {
+            Id = JwtBearerDefaults.AuthenticationScheme,
+            Type = ReferenceType.SecurityScheme
+        }
+    };
+    options.AddSecurityDefinition(securityScheme.Reference.Id, securityScheme);
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {securityScheme, new string[] { }}
+                });
+});
+
 
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IOrganizerService, OrganizerService>();
-
 builder.Services.AddScoped<IAuthService, AuthService>();
-
+builder.Services.AddScoped<ISportEventService, SportEvent>();
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 var app = builder.Build();
 
@@ -58,6 +100,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

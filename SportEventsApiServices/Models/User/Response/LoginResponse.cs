@@ -1,4 +1,4 @@
-﻿namespace SportEventsApiServices.Models.Response
+﻿namespace SportEventsApiServices.Models.User.Response
 {
     public class LoginResponse
     {

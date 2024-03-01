@@ -29,16 +29,11 @@ namespace SportEventsApiServices
                 message,
             });
         }
+
         protected IActionResult NoContent(string message)
         {
-            return new BadRequestObjectResult(new
-            {
-                code = 204,
-                status = "No Content",
-                message,
-            });
+            return new NoContentResult();
         }
-
 
         protected IActionResult Ok<T>(T value)
         {
@@ -47,8 +42,61 @@ namespace SportEventsApiServices
                 Code = 200,
                 Message = "Success",
                 Data = value,
-
             });
         }
+
+        protected IActionResult Created<T>(T value)
+        {
+            return new CreatedResult("", new
+            {
+                Code = 201,
+                Message = "Created",
+                Data = value,
+            });
+        }
+
+        protected IActionResult Accepted()
+        {
+            return new AcceptedResult();
+        }
+
+        protected IActionResult Conflict(string message)
+        {
+            return new ConflictObjectResult(new
+            {
+                Code = 409,
+                Message = "Conflict",
+                Data = message,
+            });
+        }
+
+        protected IActionResult Unauthorized(string message)
+        {
+            return new UnauthorizedObjectResult(new
+            {
+                Code = 401,
+                Message = "Unauthorized",
+                Data = message,
+            });
+        }
+
+        protected IActionResult Forbidden(string message)
+        {
+            return new ForbidResult();
+        }
+
+        protected IActionResult InternalServerError(string message)
+        {
+            return new ObjectResult(new
+            {
+                Code = 500,
+                Message = "Internal Server Error",
+                Data = message,
+            })
+            {
+                StatusCode = 500,
+            };
+        }
+
     }
 }

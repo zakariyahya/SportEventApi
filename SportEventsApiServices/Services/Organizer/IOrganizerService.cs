@@ -1,6 +1,6 @@
 ﻿using SportEventsApiServices.Models;
-using SportEventsApiServices.Models.Request;
-using SportEventsApiServices.Models.Response;
+using SportEventsApiServices.Models.Organizer.Request;
+using SportEventsApiServices.Models.Organizer.Response;
 
 namespace SportEventsApiServices.Services
 {

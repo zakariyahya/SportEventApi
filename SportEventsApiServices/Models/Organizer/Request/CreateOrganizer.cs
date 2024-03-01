@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace SportEventsApiServices.Models.Request
+namespace SportEventsApiServices.Models.Organizer.Request
 {
     public class CreateOrganizer
     {

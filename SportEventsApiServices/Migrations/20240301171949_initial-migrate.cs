@@ -61,7 +61,7 @@ namespace SportEventsApiServices.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     EventDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     EventType = table.Column<string>(type: "text", nullable: false),
-                    EventName = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    EventName = table.Column<string>(type: "text", nullable: false),
                     OrganizerId = table.Column<int>(type: "integer", nullable: false),
                     CreatedBy = table.Column<string>(type: "text", nullable: false),
                     CreatedTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),

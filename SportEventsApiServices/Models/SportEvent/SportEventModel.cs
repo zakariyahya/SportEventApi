@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using SportEventsApiServices.Models.Organizer;
 
 namespace SportEventsApiServices.Models
 {
@@ -9,7 +10,7 @@ namespace SportEventsApiServices.Models
         [JsonProperty("eventType")]
         public string EventType { get; set; }
         [JsonProperty("eventName")]
-        public DateTime EventName { get; set; }
+        public string EventName { get; set; }
         [JsonProperty("organizer")]
         public OrganizerModel Organizer {  get; set; }
     }

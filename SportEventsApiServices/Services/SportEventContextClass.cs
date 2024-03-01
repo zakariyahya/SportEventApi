@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SportEventsApiServices.Models;
+using SportEventsApiServices.Models.Organizer;
+using SportEventsApiServices.Models.User;
 namespace SportEventsApiServices.Services
 {
     public class SportEventContextClass : DbContext

@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace SportEventsApiServices.Models
+namespace SportEventsApiServices.Models.User
 {
     public class UserModel : BaseModel
     {

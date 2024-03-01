@@ -22,7 +22,7 @@ namespace SportEventsApiServices.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("SportEventsApiServices.Models.OrganizerModel", b =>
+            modelBuilder.Entity("SportEventsApiServices.Models.Organizer.OrganizerModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -83,8 +83,9 @@ namespace SportEventsApiServices.Migrations
                     b.Property<DateTime>("EventDate")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<DateTime>("EventName")
-                        .HasColumnType("timestamp without time zone");
+                    b.Property<string>("EventName")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("EventType")
                         .IsRequired()
@@ -107,7 +108,7 @@ namespace SportEventsApiServices.Migrations
                     b.ToTable("SportEvents");
                 });
 
-            modelBuilder.Entity("SportEventsApiServices.Models.UserModel", b =>
+            modelBuilder.Entity("SportEventsApiServices.Models.User.UserModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -158,7 +159,7 @@ namespace SportEventsApiServices.Migrations
 
             modelBuilder.Entity("SportEventsApiServices.Models.SportEventModel", b =>
                 {
-                    b.HasOne("SportEventsApiServices.Models.OrganizerModel", "Organizer")
+                    b.HasOne("SportEventsApiServices.Models.Organizer.OrganizerModel", "Organizer")
                         .WithMany()
                         .HasForeignKey("OrganizerId")
                         .OnDelete(DeleteBehavior.Cascade)
